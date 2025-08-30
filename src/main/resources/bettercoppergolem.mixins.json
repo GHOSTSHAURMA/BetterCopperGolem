@@ -1,0 +1,15 @@
+{
+	"required": true,
+	"package": "ma.shaur.bettercoppergolem.mixin",
+	"compatibilityLevel": "JAVA_21",
+	"mixins": [
+		"CopperGolemEntityMixin",
+		"MoveItemsTaskMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	},
+	"overwrites": {
+		"requireAnnotations": true
+	}
+}

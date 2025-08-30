@@ -1,0 +1,37 @@
+{
+	"schemaVersion": 1,
+	"id": "bettercoppergolem",
+	"version": "${version}",
+	"name": "BetterCopperGolem",
+	"description": "A simple mod for that modifies copper golem behavior based on suggestions by @cubicmetre",
+	"authors": [
+		"GhostSHAURMA"
+	],
+	"contact": {
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/bettercoppergolem/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"ma.shaur.bettercoppergolem.BetterCopperGolem"
+		],
+		"client": [
+			"ma.shaur.bettercoppergolem.BetterCopperGolemClient"
+		]
+	},
+	"mixins": [
+		"bettercoppergolem.mixins.json",
+		{
+			"config": "bettercoppergolem.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.17.2",
+		"minecraft": ">1.21.8",
+		"java": ">=21",
+		"fabric-api": "*"
+	}
+}
