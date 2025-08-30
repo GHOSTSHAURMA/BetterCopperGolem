@@ -3,7 +3,7 @@
 <p align="center">Simple AI improvements like remembering the last moved stack and bundle+shulker sorting</p>
 <h2 align="center">Expanded lil fella's RAM</h2>
 <p align="center"><img title="this gif took a megabyte of project space" src="https://github.com/GHOSTSHAURMA/BetterCopperGolem/blob/main/media/output.gif" align="center"/></p>
-Copper golems can now remeber the item stack they moved last and will prioritise moving items of the same type. Not only that but they will stop double-checking chests as long as they are carrying the same item type
+&emsp;Copper golems can now remeber the item stack they moved last and will prioritise moving items of the same type. Not only that but they will stop double-checking chests as long as they are carrying the same item type
 <br>
 <h2 align="center">TODO</h2>
 <ul>
