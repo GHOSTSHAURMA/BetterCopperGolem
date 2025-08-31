@@ -2,12 +2,18 @@ package ma.shaur.bettercoppergolem.mixin;
 
 import java.util.function.BiConsumer;
 
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Mutable;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import ma.shaur.bettercoppergolem.Config.Config;
+import ma.shaur.bettercoppergolem.Config.ConfigHandler;
 import ma.shaur.bettercoppergolem.custom.entity.LastItemDataHolder;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -25,6 +31,20 @@ import net.minecraft.world.World;
 @Mixin(MoveItemsTask.class)
 public abstract class MoveItemsTaskMixin 
 {
+	@Mutable
+	@Shadow @Final public static int VISITS_UNTIL_COOLDOWN;
+	
+	@Mutable
+	@Shadow @Final public static int MAX_STACK_SIZE_AT_ONCE;
+
+	@Inject(method = "<clinit>", at = @At("TAIL"))
+	private static void modifySnowball(CallbackInfo ci) 
+	{
+		Config config = ConfigHandler.getConfig();
+
+		VISITS_UNTIL_COOLDOWN = config.maxChestCheckCount;
+		MAX_STACK_SIZE_AT_ONCE = config.maxHeldItemStackSize;
+	}
 	
 	@Shadow
 	private static boolean canPickUpItem(PathAwareEntity entity) { return false; }
@@ -34,6 +54,9 @@ public abstract class MoveItemsTaskMixin
 	
 	@Shadow
 	private static boolean hasItem(Inventory inventory) { return false; }
+	
+	@Shadow
+	private static boolean hasExistingStack(PathAwareEntity entity, Inventory inventory) { return false; }
 	
 	@Shadow
 	protected abstract void resetVisitedPositions(PathAwareEntity pathAwareEntity);
@@ -68,13 +91,13 @@ public abstract class MoveItemsTaskMixin
 		{
 			if (!itemStack.isEmpty() && firstMatch < 0) 
 			{
-				matchAmmount = Math.min(itemStack.getCount(), 16);
+				matchAmmount = Math.min(itemStack.getCount(), MAX_STACK_SIZE_AT_ONCE);
 				firstMatch = i;
 				if(!(entity instanceof LastItemDataHolder)) break;
 			}
 			if(entity instanceof LastItemDataHolder lastStackHolder && !lastStackHolder.getLastItemStack().isEmpty() && lastStackHolder.getLastItemStack().getItem().equals(itemStack.getItem()))
 			{
-				return inventory.removeStack(i, Math.min(itemStack.getCount(), 16));
+				return inventory.removeStack(i, Math.min(itemStack.getCount(), MAX_STACK_SIZE_AT_ONCE));
 			}
 			i++;
 		}
@@ -137,7 +160,7 @@ public abstract class MoveItemsTaskMixin
 	
 	//Kinda silly, cab't think of a better way for now
 	@Redirect(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/ai/brain/task/MoveItemsTask;markVisited(Lnet/minecraft/entity/mob/PathAwareEntity;Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;)V"))
-	private void markVisitedRedirect(MoveItemsTask moveItemsTask, PathAwareEntity entity, World world, BlockPos pos, ServerWorld paramWorld, PathAwareEntity paramEntity)
+	private void betterMarkVisited(MoveItemsTask moveItemsTask, PathAwareEntity entity, World world, BlockPos pos, ServerWorld paramWorld, PathAwareEntity paramEntity)
 	{
 		if(!(entity instanceof LastItemDataHolder)) 
 		{

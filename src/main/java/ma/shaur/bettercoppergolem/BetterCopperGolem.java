@@ -3,6 +3,7 @@ package ma.shaur.bettercoppergolem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import ma.shaur.bettercoppergolem.Config.ConfigHandler;
 import net.fabricmc.api.ModInitializer;
 
 public class BetterCopperGolem implements ModInitializer 
@@ -13,6 +14,6 @@ public class BetterCopperGolem implements ModInitializer
 	@Override
 	public void onInitialize() 
 	{
-		
+		ConfigHandler.init();
 	}
 }  
