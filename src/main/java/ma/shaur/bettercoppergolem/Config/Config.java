@@ -3,6 +3,9 @@ package ma.shaur.bettercoppergolem.Config;
 @SuppressWarnings("unused")
 public class Config 
 {
+	private final String _shulkerAndBundleSorting = "Enable soring shulker boxes and bundles based on their content and color";
+	public boolean shulkerAndBundleSorting = true;
+	
 	private final String _ignoreColor = "Completely ignore color of shulker boxes and bundles when sorting";
 	private final String _ignoreColorTrue = "true - will not consider color of the shulkers when placing it in a chest";
 	private final String _ignoreColorFalse = "flase - all dyed shulkers will be sorted by color only, the non-dyed ones will still be sorted by content";
