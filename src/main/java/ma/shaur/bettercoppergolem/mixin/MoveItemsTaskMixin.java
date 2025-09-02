@@ -135,7 +135,6 @@ public abstract class MoveItemsTaskMixin
 		}
 	}
 
-	@SuppressWarnings("unchecked")
 	private static ItemStack betterInsertStack(PathAwareEntity entity, Inventory inventory)
 	{
 		int i = 0;
@@ -212,7 +211,14 @@ public abstract class MoveItemsTaskMixin
 					}
 					if(j < 27) // I CAN NOT find max stack amount for container component
 					{
-						((ContainerComponentAccessor)(Object) component).setStacks((DefaultedList<ItemStack>) (DefaultedList<?>)DefaultedList.copyOf(stacks, hand)); //pretty sure this is a BAAAD thing to do BUT it's 2 am (it replaces all the contents, i'll fix it lated TODO)
+						DefaultedList<ItemStack> list = DefaultedList.ofSize(j + 2, ItemStack.EMPTY);
+						j = 0;
+						for(; j + 2 < list.size(); j++)
+						{
+							list.set(j, stacks.get(j));
+						}
+						list.set(j, hand);
+						((ContainerComponentAccessor)(Object) component).setStacks(list); 
 						if(entity instanceof LastItemDataHolder lastStackHolder) lastStackHolder.setLastItemStack(handCopy);
 						return ItemStack.EMPTY;
 					}
@@ -256,20 +262,23 @@ public abstract class MoveItemsTaskMixin
 	}
 	
 	//I am become lag, the destroyer of TPS
-	@Redirect(method = "canInsert", at = @At(value = "INVOKE", target = "hasExistingStack"))
+	@Redirect(method = "canInsert", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/ai/brain/task/MoveItemsTask;hasExistingStack(Lnet/minecraft/entity/mob/PathAwareEntity;Lnet/minecraft/inventory/Inventory;)Z"))
 	private static boolean betterHasExistingStack(PathAwareEntity entity, Inventory inventory, PathAwareEntity paramEntity, Inventory paramInventory)
 	{
 		ItemStack hand = entity.getMainHandStack();
 		Config config = ConfigHandler.getConfig();
+		System.out.println("a");
 
 		boolean emptySpaces = false, shouldPlace = false, shouldInsert = false;
 		for(ItemStack stack : inventory)
-		{			
+		{
 			if(stack.isEmpty()) 
 			{
 				emptySpaces = true;
 				continue;
 			}
+			
+			if(!hand.getComponents().contains(DataComponentTypes.BUNDLE_CONTENTS) && !hand.getComponents().contains(DataComponentTypes.CONTAINER) && ItemStack.areItemsEqual(stack, hand)) shouldPlace = true;
 			
 			if(!config.shulkerAndBundleSorting || shouldPlace || shouldInsert) continue;
 			
@@ -302,7 +311,7 @@ public abstract class MoveItemsTaskMixin
 					}
 				}
 			}
-			else if(componentMap.contains(DataComponentTypes.CONTAINER))
+			if(componentMap.contains(DataComponentTypes.CONTAINER))
 			{
 				ContainerComponent component = componentMap.get(DataComponentTypes.CONTAINER);
 
@@ -347,7 +356,6 @@ public abstract class MoveItemsTaskMixin
 					}
 				}
 			}
-			else if(ItemStack.areItemsEqual(stack, hand)) return true;
 		}
 		
 		return shouldPlace && emptySpaces || shouldInsert;
