@@ -267,7 +267,6 @@ public abstract class MoveItemsTaskMixin
 	{
 		ItemStack hand = entity.getMainHandStack();
 		Config config = ConfigHandler.getConfig();
-		System.out.println("a");
 
 		boolean emptySpaces = false, shouldPlace = false, shouldInsert = false;
 		for(ItemStack stack : inventory)
@@ -278,7 +277,15 @@ public abstract class MoveItemsTaskMixin
 				continue;
 			}
 			
-			if(!hand.getComponents().contains(DataComponentTypes.BUNDLE_CONTENTS) && !hand.getComponents().contains(DataComponentTypes.CONTAINER) && ItemStack.areItemsEqual(stack, hand)) shouldPlace = true;
+			if(!hand.getComponents().contains(DataComponentTypes.BUNDLE_CONTENTS) && !hand.getComponents().contains(DataComponentTypes.CONTAINER) && ItemStack.areItemsEqual(stack, hand)) 
+			{
+				shouldPlace = true;
+				if(stack.getCount() < stack.getMaxCount())
+				{
+					emptySpaces = true;
+					break;
+				}
+			}
 			
 			if(!config.shulkerAndBundleSorting || shouldPlace || shouldInsert) continue;
 			
