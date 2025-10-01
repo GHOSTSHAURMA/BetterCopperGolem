@@ -1,4 +1,4 @@
-package ma.shaur.bettercoppergolem.Config;
+package ma.shaur.bettercoppergolem.config;
 
 @SuppressWarnings("unused")
 public class Config 

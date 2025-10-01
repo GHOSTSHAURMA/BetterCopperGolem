@@ -1,4 +1,4 @@
-package ma.shaur.bettercoppergolem.Config;
+package ma.shaur.bettercoppergolem.config;
 
 import java.io.File;
 import java.io.FileReader;
@@ -52,6 +52,7 @@ public class ConfigHandler
 		{
 			gson.toJson(config, writer);
 		    writer.flush();
+		    writer.close();
 		}
 	}
 }

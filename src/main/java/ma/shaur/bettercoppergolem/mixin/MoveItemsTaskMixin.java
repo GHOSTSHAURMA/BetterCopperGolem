@@ -12,8 +12,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
-import ma.shaur.bettercoppergolem.Config.Config;
-import ma.shaur.bettercoppergolem.Config.ConfigHandler;
+import ma.shaur.bettercoppergolem.config.Config;
+import ma.shaur.bettercoppergolem.config.ConfigHandler;
 import ma.shaur.bettercoppergolem.custom.entity.LastItemDataHolder;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
