@@ -1,0 +1,25 @@
+{
+	"bettercoppergolem.options" : "Настройки Better Copper Golem",
+	
+	"option.bettercoppergolem.shulker_and_bundle_sorting":"Сортировать шалкеры и мешки",
+	"option.bettercoppergolem.shulker_and_bundle_sorting.info":"Позволяет големам сортировать мешки и шалкеровые ящики по цвету и их содержимому",
+	
+	"option.bettercoppergolem.ignore_color":"Игнорировать цвет",
+	"option.bettercoppergolem.ignore_color.info":"Полностью игнорировать цвет шалкеровых ящиков и мешков при сортировке",
+	"option.bettercoppergolem.ignore_color.info.true":"Включено - цвет шалкеровых ящиков и мешков не будет учитываться, когла их кладут их в сундук",
+	"option.bettercoppergolem.ignore_color.info.false":"Выключено - все крашенные шалкеровые ящики и мешки будут сортироваться по цвету, не крашенные - по содержимому",
+	
+	"option.bettercoppergolem.allow_individual_items_match_container_contents":"Учитывать содержимое контейнеров",
+	"option.bettercoppergolem.allow_individual_items_match_container_contents.info":"Учитывать содержимое шалкеровых ящиков и мешков",
+	"option.bettercoppergolem.allow_individual_items_match_container_contents.info.true":"Включено - содержимое инвенторей шалкеровых ящиков и мешков внутри сундуков будет учтено при сортировке индивидуальных предметов",
+	"option.bettercoppergolem.allow_individual_items_match_container_contents.info.false":"Выключено - содержимое шалкеровых ящиков и мешков будет игнорировано",
+	
+	"option.bettercoppergolem.allow_inserting_items_into_containers":"Класть предметы в контейнеры",
+	"option.bettercoppergolem.allow_inserting_items_into_containers.info":"Позволит добавлять предметы в инвентари шалкеровых ящиков и мешков внутри сундуков",
+	
+	"option.bettercoppergolem.max_chest_check_count":"Макс. посещаемых сундуков",
+	"option.bettercoppergolem.max_chest_check_count.info":"Максимальное колличество сундуков, посищаемых големами перед перерывом",
+	
+	"option.bettercoppergolem.max_held_item_stack_size":"Макс. кол-во предметов",
+	"option.bettercoppergolem.max_held_item_stack_size.info":"Максимальный размер стаков, переносимых големами"
+}

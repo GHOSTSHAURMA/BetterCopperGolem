@@ -1,0 +1,25 @@
+{
+	"bettercoppergolem.options" : "Better Copper Golem Settings",
+	
+	"option.bettercoppergolem.shulker_and_bundle_sorting":"Sort shulker boxes and bundles",
+	"option.bettercoppergolem.shulker_and_bundle_sorting.info":"Enable sorting shulker boxes and bundles based on their content and color",
+	
+	"option.bettercoppergolem.ignore_color":"Ignore color",
+	"option.bettercoppergolem.ignore_color.info":"Completely ignore color of shulker boxes and bundles when sorting",
+	"option.bettercoppergolem.ignore_color.info.true":"Enabled - will not consider color of the shulkers when placing them into a chest",
+	"option.bettercoppergolem.ignore_color.info.false":"Disabled - all dyed shulkers will be sorted by color only, the non-dyed ones will still be sorted by content",
+	
+	"option.bettercoppergolem.allow_individual_items_match_container_contents":"Match items to container content",
+	"option.bettercoppergolem.allow_individual_items_match_container_contents.info":"Allow matching items with inventories of containers within chests",
+	"option.bettercoppergolem.allow_individual_items_match_container_contents.info.true":"Enabled - will consider container contents within chests when checking if the item belongs in a chest",
+	"option.bettercoppergolem.allow_individual_items_match_container_contents.info.false":"Disabled - will ignore container contents",
+	
+	"option.bettercoppergolem.allow_inserting_items_into_containers":"Place items into containers",
+	"option.bettercoppergolem.allow_inserting_items_into_containers.info":"Allow inserting items into containers within chests",
+	
+	"option.bettercoppergolem.max_chest_check_count":"Max chests check",
+	"option.bettercoppergolem.max_chest_check_count.info":"Maximum ammount of copper golems will check before going idle",
+	
+	"option.bettercoppergolem.max_held_item_stack_size":"Max items held",
+	"option.bettercoppergolem.max_held_item_stack_size.info":"Maximum ammount of items copper golems can hold"
+}

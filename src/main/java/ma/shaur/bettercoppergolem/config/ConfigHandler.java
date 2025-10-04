@@ -17,7 +17,7 @@ public class ConfigHandler
 {
 	private static final File configFile = FabricLoader.getInstance().getConfigDir().resolve(BetterCopperGolem.MOD_ID + "-config.json").toFile();
 	private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
-	private static Config config = null;
+	private static volatile Config config = null;
 
 	public static Config getConfig() 
 	{
@@ -33,7 +33,7 @@ public class ConfigHandler
 		} 
 		catch (JsonSyntaxException | JsonIOException | IOException e) 
 		{
-			BetterCopperGolem.LOGGER.error("Exception loading config", e);
+			BetterCopperGolem.LOGGER.error("Error loading config", e);
 			if(config == null) config = new Config(); 
 		}
 	}

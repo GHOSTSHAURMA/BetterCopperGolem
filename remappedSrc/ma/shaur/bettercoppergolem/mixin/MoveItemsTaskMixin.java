@@ -76,7 +76,10 @@ public abstract class MoveItemsTaskMixin
 
 	@Shadow
 	protected abstract void markVisited(PathAwareEntity entity, World world, BlockPos pos);
-
+	
+	@Shadow 
+	protected abstract void method_74021(PathAwareEntity pathAwareEntity, World world, BlockPos blockPos); //me when I eat the mapping
+	
 	@ModifyArg(method = "tickInteracting", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/ai/brain/task/MoveItemsTask;selectInteractionState(Lnet/minecraft/entity/mob/PathAwareEntity;Lnet/minecraft/inventory/Inventory;Ljava/util/function/BiConsumer;Ljava/util/function/BiConsumer;Ljava/util/function/BiConsumer;Ljava/util/function/BiConsumer;)V"), index = 2)
 	private BiConsumer<PathAwareEntity, Inventory> pickupItemCallback(BiConsumer<PathAwareEntity, Inventory> pickupItemCallback)
 	{

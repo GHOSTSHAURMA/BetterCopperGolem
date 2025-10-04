@@ -1,30 +1,32 @@
 package ma.shaur.bettercoppergolem.config;
 
+import net.minecraft.text.Text;
+
 @SuppressWarnings("unused")
 public class Config 
 {
-	private final String _shulkerAndBundleSorting = "Enable soring shulker boxes and bundles based on their content and color";
+	private final String _shulkerAndBundleSorting = Text.translatable("option.bettercoppergolem.shulker_and_bundle_sorting.info").getString();
 	public boolean shulkerAndBundleSorting = true;
 	
-	private final String _ignoreColor = "Completely ignore color of shulker boxes and bundles when sorting";
-	private final String _ignoreColorTrue = "true - will not consider color of the shulkers when placing it in a chest";
-	private final String _ignoreColorFalse = "flase - all dyed shulkers will be sorted by color only, the non-dyed ones will still be sorted by content";
+	private final String _ignoreColor = Text.translatable("option.bettercoppergolem.ignore_color.info").getString();
+	private final String _ignoreColorTrue = Text.translatable("option.bettercoppergolem.ignore_color.info.true").getString();
+	private final String _ignoreColorFalse = Text.translatable("option.bettercoppergolem.ignore_color.info.false").getString();
 	public boolean ignoreColor = false;
 
-	private final String _allowIndividualItemsMatchContainerContents = "Allow matching items with inventories of containers within chests";
-	private final String _allowIndividualItemsMatchContainerContentsTrue = "true - will consider container contents within chests when checking if the item belongs in a chest";
-	private final String _allowIndividualItemsMatchContainerContentsFalse = "flase - will ignore container contents";
+	private final String _allowIndividualItemsMatchContainerContents = Text.translatable("option.bettercoppergolem.allow_individual_items_match_container_contents.info").getString();
+	private final String _allowIndividualItemsMatchContainerContentsTrue = Text.translatable("option.bettercoppergolem.allow_individual_items_match_container_contents.info.true").getString();
+	private final String _allowIndividualItemsMatchContainerContentsFalse = Text.translatable("option.bettercoppergolem.allow_individual_items_match_container_contents.info.false").getString();
 	public boolean allowIndividualItemsMatchContainerContents = false;
 
-	private final String _allowInsertingItemsIntoContainers = "Allow inserting items into containers within chests ";
-	private final String _allowInsertingItemsIntoContainersTrue = "true - will insert matched items direcrly into container";
-	private final String _allowInsertingItemsIntoContainersFalse = "flase - will not insert items into containers";
+	private final String _allowInsertingItemsIntoContainers =  Text.translatable("option.bettercoppergolem.allow_inserting_items_into_containers.info").getString();
+	private final String _allowInsertingItemsIntoContainersTrue = Text.translatable("option.bettercoppergolem.allow_inserting_items_into_containers.info.true").getString();
+	private final String _allowInsertingItemsIntoContainersFalse = Text.translatable("option.bettercoppergolem.allow_inserting_items_into_containers.info.false").getString();
 	public boolean allowInsertingItemsIntoContainers = false;
 
-	private String _maxChestCheckCount = "Maximum ammount of chests golem will check before waiting";
+	public String _maxChestCheckCount = Text.translatable("option.bettercoppergolem.max_chest_check_count.info").getString();
 	public int maxChestCheckCount = 10;
 
-	private String _maxHeldItemStackSize = "Maximum ammount of items golem can hold at one time";
+	public String _maxHeldItemStackSize = Text.translatable("option.bettercoppergolem.max_held_item_stack_size.info").getString();
 	public int maxHeldItemStackSize = 16;
 	
 	Config() {}

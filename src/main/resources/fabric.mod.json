@@ -8,7 +8,9 @@
 		"GhostSHAURMA"
 	],
 	"contact": {
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"sources": "https://github.com/GHOSTSHAURMA/BetterCopperGolem",
+		"issues": "https://github.com/GHOSTSHAURMA/BetterCopperGolem/issues",
+		"homepage": "https://modrinth.com/mod/bettercoppergolem/versions"
 	},
 	"license": "GNU General Public License v3.0",
 	"icon": "assets/bettercoppergolem/icon.png",
@@ -19,7 +21,8 @@
 		],
 		"client": [
 			"ma.shaur.bettercoppergolem.BetterCopperGolemClient"
-		]
+		],
+		"modmenu": [ "ma.shaur.bettercoppergolem.config.client.ModMenu" ]
 	},
 	"mixins": [
 		"bettercoppergolem.mixins.json",
@@ -30,8 +33,11 @@
 	],
 	"depends": {
 		"fabricloader": ">=0.17.2",
-		"minecraft": "=1.21.9",
+		"minecraft": ">=1.21.9",
 		"java": ">=21",
 		"fabric-api": "*"
-	}
+	},
+	"suggests": {
+    	"modmenu": "*"
+    }
 }
