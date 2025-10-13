@@ -21,5 +21,8 @@
 	"option.bettercoppergolem.max_chest_check_count.info":"Максимальное колличество сундуков, посищаемых големами перед перерывом",
 	
 	"option.bettercoppergolem.max_held_item_stack_size":"Макс. кол-во предметов",
-	"option.bettercoppergolem.max_held_item_stack_size.info":"Максимальный размер стаков, переносимых големами"
+	"option.bettercoppergolem.max_held_item_stack_size.info":"Максимальный размер стаков, переносимых големами",
+	
+	"option.bettercoppergolem.cooldown_time":"Время простоя",
+	"option.bettercoppergolem.cooldown_time.info":"Время в тиках(1/20ая секунды), которое голем будет простаиваьб после достижения лимита сундуков"
 }

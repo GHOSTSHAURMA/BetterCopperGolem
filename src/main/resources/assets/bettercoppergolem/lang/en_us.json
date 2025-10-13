@@ -21,5 +21,8 @@
 	"option.bettercoppergolem.max_chest_check_count.info":"Maximum ammount of copper golems will check before going idle",
 	
 	"option.bettercoppergolem.max_held_item_stack_size":"Max items held",
-	"option.bettercoppergolem.max_held_item_stack_size.info":"Maximum ammount of items copper golems can hold"
+	"option.bettercoppergolem.max_held_item_stack_size.info":"Maximum ammount of items copper golems can hold",
+	
+	"option.bettercoppergolem.cooldown_time":"Cooldown time",
+	"option.bettercoppergolem.cooldown_time.info":"Time in ticks(1/20th of a second) golem will spend idle after reaching chest limit"
 }

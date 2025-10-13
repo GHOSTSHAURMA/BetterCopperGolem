@@ -61,45 +61,33 @@ public class ConfigScreen extends GameOptionsScreen
 					SimpleOption.ofBoolean(translationKey("allow_individual_items_match_container_contents"), tooltipFactory("allow_individual_items_match_container_contents"), config.allowIndividualItemsMatchContainerContents, b -> config.allowIndividualItemsMatchContainerContents = b),
 					SimpleOption.ofBoolean(translationKey("allow_inserting_items_into_containers"), tooltipFactory("allow_inserting_items_into_containers"), config.allowInsertingItemsIntoContainers, b -> config.allowInsertingItemsIntoContainers = b));
 
-		TextWidget maxChestCheckCountText = new TextWidget(100, 20, Text.translatable(translationKey("max_chest_check_count")), textRenderer);
-		maxChestCheckCountText.setMaxWidth(0, TextOverflow.SCROLLING);
+		body.addWidgetEntry(intContainer(Text.translatable(translationKey("max_chest_check_count")),Text.translatable(translationKey("max_chest_check_count.info")), config.maxChestCheckCount, i -> config.maxChestCheckCount = i),
+							intContainer(Text.translatable(translationKey("max_held_item_stack_size")), Text.translatable(translationKey("max_held_item_stack_size.info")), config.maxHeldItemStackSize, i -> config.maxHeldItemStackSize = i));
+		body.addWidgetEntry(intContainer(Text.translatable(translationKey("cooldown_time")),Text.translatable(translationKey("cooldown_time.info")), config.cooldownTime, i -> config.cooldownTime = i), null);
+	}
+	
+	private Container intContainer(Text text, Text tooltip, int value, ChangeListener listener)
+	{
+		TextWidget textWidget = new TextWidget(100, 20, text, textRenderer);
+		textWidget.setMaxWidth(0, TextOverflow.SCROLLING);
 		
-		TextFieldWidget maxChestCheckCount = new TextFieldWidget(textRenderer, 50, 20, ScreenTexts.EMPTY);
-		maxChestCheckCount.setText(Integer.toString(config.maxChestCheckCount));
-		maxChestCheckCount.setCentered(true);
-		maxChestCheckCount.setTextPredicate(ONLY_INTEGER_NUMBERS_PREDICATE);
-		maxChestCheckCount.setChangedListener(s -> 
+		TextFieldWidget field = new TextFieldWidget(textRenderer, 50, 20, ScreenTexts.EMPTY);
+		field.setText(Integer.toString(value));
+		field.setCentered(true);
+		field.setTextPredicate(ONLY_INTEGER_NUMBERS_PREDICATE);
+		field.setChangedListener(s -> 
 		{
 			try
 			{
-				config.maxChestCheckCount = Integer.parseInt(s);
-			}
-			catch (NumberFormatException e) {}
-		});
-		
-		Container maxChestCheckCountLayout = new Container(150, 20, List.of(maxChestCheckCountText, maxChestCheckCount));
-		maxChestCheckCountLayout.setTooltip(Tooltip.of(Text.translatable(translationKey("max_chest_check_count.info"))));
-		
-		TextWidget maxHeldItemStackSizeText = new TextWidget(100, 20, Text.translatable(translationKey("max_held_item_stack_size")), textRenderer);
-		maxHeldItemStackSizeText.setMaxWidth(0, TextOverflow.SCROLLING);
-		
-		TextFieldWidget maxHeldItemStackSize = new TextFieldWidget(textRenderer, 50, 20, ScreenTexts.EMPTY);
-		maxHeldItemStackSize.setText(Integer.toString(config.maxHeldItemStackSize));
-		maxHeldItemStackSize.setCentered(true);
-		maxHeldItemStackSize.setTextPredicate(ONLY_INTEGER_NUMBERS_PREDICATE);
-		maxHeldItemStackSize.setChangedListener(s -> 
-		{
-			try
-			{
-				config.maxHeldItemStackSize = Integer.parseInt(s);
+				listener.changed(Integer.parseInt(s));
 			}
 			catch (NumberFormatException e) {}
 		});
 
-		Container maxHeldItemStackSizeLayout = new Container(150, 20, List.of(maxHeldItemStackSizeText, maxHeldItemStackSize));
-		maxHeldItemStackSizeLayout.setTooltip(Tooltip.of(Text.translatable(translationKey("max_held_item_stack_size.info"))));
+		Container layout = new Container(150, 20, List.of(textWidget, field));
+		layout.setTooltip(Tooltip.of(tooltip));
 		
-		body.addWidgetEntry(maxChestCheckCountLayout, maxHeldItemStackSizeLayout);
+		return layout;
 	}
 
 	@Override
@@ -185,5 +173,10 @@ public class ConfigScreen extends GameOptionsScreen
 			super.setFocused(focused);
 			if(!focused) for(ClickableWidget widget : children) widget.setFocused(false);
 		}
+	}
+	
+	private interface ChangeListener
+	{
+		void changed(int i);
 	}
 }

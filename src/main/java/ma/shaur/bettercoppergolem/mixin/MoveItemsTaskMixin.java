@@ -4,12 +4,12 @@ import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.stream.Stream;
 
-import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Mutable;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
+import org.spongepowered.asm.mixin.injection.ModifyConstant;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
 import ma.shaur.bettercoppergolem.config.Config;
@@ -40,22 +40,6 @@ import net.minecraft.world.World;
 @Mixin(MoveItemsTask.class)
 public abstract class MoveItemsTaskMixin 
 {
-	@Mutable
-	@Shadow 
-	@Final private static int VISITS_UNTIL_COOLDOWN;
-	
-	@Mutable
-	@Shadow 
-	@Final private static int MAX_STACK_SIZE_AT_ONCE;
-
-	static 
-	{
-		Config config = ConfigHandler.getConfig();
-
-		VISITS_UNTIL_COOLDOWN = config.maxChestCheckCount;
-		MAX_STACK_SIZE_AT_ONCE = config.maxHeldItemStackSize;
-	}
-
 	@Shadow
 	private static boolean canPickUpItem(PathAwareEntity entity) { return false; }
 	
@@ -76,6 +60,18 @@ public abstract class MoveItemsTaskMixin
 
 	@Shadow
 	protected abstract void markVisited(PathAwareEntity entity, World world, BlockPos pos);
+	
+	@ModifyConstant(method = "Lnet/minecraft/entity/ai/brain/task/MoveItemsTask;markVisited(Lnet/minecraft/entity/mob/PathAwareEntity;Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;)V", constant = @Constant(intValue = 10))
+	private int maxChestCheckCount(int constant)
+	{
+		return ConfigHandler.getConfig().maxChestCheckCount;
+	}
+	
+	@ModifyConstant(method = "cooldown", constant = @Constant(intValue = 140))
+	private int cooldownTime(int constant)
+	{
+		return ConfigHandler.getConfig().cooldownTime;
+	}
 
 	@ModifyArg(method = "tickInteracting", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/ai/brain/task/MoveItemsTask;selectInteractionState(Lnet/minecraft/entity/mob/PathAwareEntity;Lnet/minecraft/inventory/Inventory;Ljava/util/function/BiConsumer;Ljava/util/function/BiConsumer;Ljava/util/function/BiConsumer;Ljava/util/function/BiConsumer;)V"), index = 2)
 	private BiConsumer<PathAwareEntity, Inventory> pickupItemCallback(BiConsumer<PathAwareEntity, Inventory> pickupItemCallback)
@@ -94,17 +90,19 @@ public abstract class MoveItemsTaskMixin
 	private static ItemStack betterExtractStack(PathAwareEntity entity, Inventory inventory) 
 	{
 		int i = 0, firstMatch = -1, matchAmmount = 0;
+		Config config = ConfigHandler.getConfig();
+		
 		for (ItemStack itemStack : inventory)
 		{
 			if (!itemStack.isEmpty() && firstMatch < 0) 
 			{
-				matchAmmount = Math.min(itemStack.getCount(), MAX_STACK_SIZE_AT_ONCE);
+				matchAmmount = Math.min(itemStack.getCount(), config.maxHeldItemStackSize);
 				firstMatch = i;
 				if(!(entity instanceof LastItemDataHolder)) break;
 			}
 			if(entity instanceof LastItemDataHolder lastStackHolder && !lastStackHolder.getLastItemStack().isEmpty() && ItemStack.areItemsEqual(lastStackHolder.getLastItemStack(), itemStack))
 			{
-				return inventory.removeStack(i, Math.min(itemStack.getCount(), MAX_STACK_SIZE_AT_ONCE));
+				return inventory.removeStack(i, Math.min(itemStack.getCount(), config.maxHeldItemStackSize));
 			}
 			i++;
 		}
