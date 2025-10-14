@@ -1,5 +1,6 @@
 {
 	"bettercoppergolem.options" : "Настройки Better Copper Golem",
+	"bettercoppergolem.options.reset": "По умолчанию",
 	
 	"option.bettercoppergolem.shulker_and_bundle_sorting":"Сортировать шалкеры и мешки",
 	"option.bettercoppergolem.shulker_and_bundle_sorting.info":"Позволяет големам сортировать мешки и шалкеровые ящики по цвету и их содержимому",
@@ -24,8 +25,11 @@
 	"option.bettercoppergolem.max_held_item_stack_size.info":"Максимальный размер стаков, переносимых големами",
 	
 	"option.bettercoppergolem.cooldown_time":"Время простоя",
-	"option.bettercoppergolem.cooldown_time.info":"Время в тиках(1/20ая секунды), которое голем будет простаиваьб после достижения лимита сундуков",
+	"option.bettercoppergolem.cooldown_time.info":"Время в тиках(1/20ая секунды), которое големы будут простаивать после достижения лимита сундуков",
 	
 	"option.bettercoppergolem.vertical_range":"Максимальная высота",
-	"option.bettercoppergolem.vertical_range.info":"Высота, до которой големы могут дотянуться(могут возникнуть проблемы с тем, чтобы найти до них путь)"
+	"option.bettercoppergolem.vertical_range.info":"Высота, до которой големы могут дотянуться(могут возникнуть проблемы с тем, чтобы найти до них путь)",
+	
+	"option.bettercoppergolem.interaction_time":"Время взаимодейтсвия",
+	"option.bettercoppergolem.interaction_time.info":"Время в тиках(1/20ая секунды), которое големы будут тратить на просмотр одного сундука(Ломает анимации)"
 }

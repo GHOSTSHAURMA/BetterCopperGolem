@@ -61,6 +61,12 @@ public abstract class MoveItemsTaskMixin
 	@Shadow
 	protected abstract void markVisited(PathAwareEntity entity, World world, BlockPos pos);
 	
+	@ModifyConstant(method = "tickInteracting", constant = @Constant(intValue = 60))
+	public int interactionTime(int constant)
+	{
+		return ConfigHandler.getConfig().interactionTime;
+	}
+	
 	@ModifyConstant(method = "Lnet/minecraft/entity/ai/brain/task/MoveItemsTask;isWithinRange", constant = @Constant(doubleValue = 0.5))
 	public double verticalRange(double constant)
 	{
