@@ -21,5 +21,7 @@ public class Config
 
 	public int cooldownTime = 140;
 	
+	public int verticalRange = 2;
+	
 	Config() {}
 }
