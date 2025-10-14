@@ -1,5 +1,6 @@
 {
 	"bettercoppergolem.options" : "Better Copper Golem Settings",
+	"bettercoppergolem.options.reset": "Reset to default",
 	
 	"option.bettercoppergolem.shulker_and_bundle_sorting":"Sort shulker boxes and bundles",
 	"option.bettercoppergolem.shulker_and_bundle_sorting.info":"Enable sorting shulker boxes and bundles based on their content and color",
@@ -24,5 +25,11 @@
 	"option.bettercoppergolem.max_held_item_stack_size.info":"Maximum ammount of items copper golems can hold",
 	
 	"option.bettercoppergolem.cooldown_time":"Cooldown time",
-	"option.bettercoppergolem.cooldown_time.info":"Time in ticks(1/20th of a second) golem will spend idle after reaching chest limit"
+	"option.bettercoppergolem.cooldown_time.info":"Time in ticks(1/20th of a second) golems will spend idle after reaching chest limit",
+	
+	"option.bettercoppergolem.vertical_range":"Vertical range",
+	"option.bettercoppergolem.vertical_range.info":"How high can golems reach(pathfinding is a bit scuffed tho)",
+	
+	"option.bettercoppergolem.interaction_time":"Шnteraction time",
+	"option.bettercoppergolem.interaction_time.info":"Time in ticks(1/20th of a second) golems will spend looking through a single chest(breaks animations)"
 }

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.function.Predicate;
 
 import com.google.gson.JsonIOException;
+import com.llamalad7.mixinextras.injector.LateApplyingInjectorInfo;
 
 import ma.shaur.bettercoppergolem.BetterCopperGolemClient;
 import ma.shaur.bettercoppergolem.config.Config;
@@ -17,6 +18,7 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
 import net.minecraft.client.gui.screen.option.GameOptionsScreen;
 import net.minecraft.client.gui.tooltip.Tooltip;
+import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.ClickableWidget;
 import net.minecraft.client.gui.widget.ContainerWidget;
 import net.minecraft.client.gui.widget.TextFieldWidget;
@@ -44,7 +46,42 @@ public class ConfigScreen extends GameOptionsScreen
 		return true;
 	};
 
-	@SuppressWarnings("resource")
+	@Override
+	protected void initFooter() 
+	{
+		this.layout.addFooter(new Container(308, 20, List.of(ButtonWidget.builder(ScreenTexts.DONE, (button) -> this.close()).width(150).build(), ButtonWidget.builder(Text.translatable("bettercoppergolem.options.reset"), (button) -> this.setDefaultValues()).width(150).build()), 8));
+	}
+	
+	private void setDefaultValues()
+	{
+		Config config = ConfigHandler.getConfig();
+		Config defaultValues = new Config();
+
+		config.shulkerAndBundleSorting = defaultValues.shulkerAndBundleSorting;
+		config.ignoreColor = defaultValues.ignoreColor;
+		config.allowIndividualItemsMatchContainerContents = defaultValues.allowIndividualItemsMatchContainerContents;
+		config.allowInsertingItemsIntoContainers = defaultValues.allowInsertingItemsIntoContainers;
+		config.maxChestCheckCount = defaultValues.maxChestCheckCount;
+		config.maxHeldItemStackSize = defaultValues.maxHeldItemStackSize;
+		config.cooldownTime = defaultValues.cooldownTime;
+		config.verticalRange = defaultValues.verticalRange;
+		config.interactionTime = defaultValues.interactionTime;
+
+		try
+		{
+			ConfigHandler.saveConfig();
+		} 
+		catch (JsonIOException | IOException e)
+		{
+			BetterCopperGolemClient.LOGGER.error("Error saving config from a config screen: ", e);
+		}
+
+		remove(body);
+		initBody();
+		addDrawableChild(body);
+		refreshWidgetPositions();
+	}
+	
 	public ConfigScreen(Screen parent) 
 	{
 		super(parent, MinecraftClient.getInstance().options, Text.translatable("bettercoppergolem.options"));
@@ -63,7 +100,9 @@ public class ConfigScreen extends GameOptionsScreen
 
 		body.addWidgetEntry(intContainer(Text.translatable(translationKey("max_chest_check_count")),Text.translatable(translationKey("max_chest_check_count.info")), config.maxChestCheckCount, i -> config.maxChestCheckCount = i),
 							intContainer(Text.translatable(translationKey("max_held_item_stack_size")), Text.translatable(translationKey("max_held_item_stack_size.info")), config.maxHeldItemStackSize, i -> config.maxHeldItemStackSize = i));
-		body.addWidgetEntry(intContainer(Text.translatable(translationKey("cooldown_time")),Text.translatable(translationKey("cooldown_time.info")), config.cooldownTime, i -> config.cooldownTime = i), null);
+		body.addWidgetEntry(intContainer(Text.translatable(translationKey("cooldown_time")),Text.translatable(translationKey("cooldown_time.info")), config.cooldownTime, i -> config.cooldownTime = i), 
+							intContainer(Text.translatable(translationKey("vertical_range")), Text.translatable(translationKey("vertical_range.info")), config.verticalRange, i -> config.verticalRange = i));
+		body.addWidgetEntry(intContainer(Text.translatable(translationKey("interaction_time")),Text.translatable(translationKey("interaction_time.info")), config.interactionTime, i -> config.interactionTime = i), null);
 	}
 	
 	private Container intContainer(Text text, Text tooltip, int value, ChangeListener listener)
@@ -124,11 +163,18 @@ public class ConfigScreen extends GameOptionsScreen
 	private class Container extends ContainerWidget 
 	{
 		private List<ClickableWidget> children = new ArrayList<>();
+		private int spacing;
 
 	    public Container(int width, int height, List<ClickableWidget> children) 
 		{
+	    	this(width, height, children, 0);
+		}
+
+	    public Container(int width, int height, List<ClickableWidget> children, int spacing) 
+		{
 			super(0, 0, width, height, ScreenTexts.EMPTY);
 			this.children = children;
+			this.spacing = spacing;
 		}
 	    
 		protected void renderWidget(DrawContext context, int mouseX, int mouseY, float deltaTicks) 
@@ -140,7 +186,7 @@ public class ConfigScreen extends GameOptionsScreen
 			{
 				widget.setPosition(x, y);
 				widget.render(context, mouseX, mouseY, deltaTicks);
-				x += widget.getWidth();
+				x += widget.getWidth() + spacing;
 			}
 
 			context.disableScissor();

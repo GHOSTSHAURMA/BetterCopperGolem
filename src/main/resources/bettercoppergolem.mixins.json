@@ -5,7 +5,8 @@
 	"mixins": [
 		"CopperGolemEntityMixin",
 		"MoveItemsTaskMixin",
-		"ContainerComponentAccessor"
+		"ContainerComponentAccessor",
+		"CopperGolemBrainMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

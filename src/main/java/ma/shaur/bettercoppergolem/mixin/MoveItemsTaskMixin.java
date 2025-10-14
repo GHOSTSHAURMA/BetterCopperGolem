@@ -61,6 +61,18 @@ public abstract class MoveItemsTaskMixin
 	@Shadow
 	protected abstract void markVisited(PathAwareEntity entity, World world, BlockPos pos);
 	
+	@ModifyConstant(method = "tickInteracting", constant = @Constant(intValue = 60))
+	public int interactionTime(int constant)
+	{
+		return ConfigHandler.getConfig().interactionTime;
+	}
+	
+	@ModifyConstant(method = "Lnet/minecraft/entity/ai/brain/task/MoveItemsTask;isWithinRange", constant = @Constant(doubleValue = 0.5))
+	public double verticalRange(double constant)
+	{
+		return ConfigHandler.getConfig().verticalRange - 1.5;
+	}
+	
 	@ModifyConstant(method = "Lnet/minecraft/entity/ai/brain/task/MoveItemsTask;markVisited(Lnet/minecraft/entity/mob/PathAwareEntity;Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;)V", constant = @Constant(intValue = 10))
 	private int maxChestCheckCount(int constant)
 	{
